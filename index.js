@@ -1,4 +1,5 @@
 require("dotenv").config();
+const fs = require("fs")
 const express = require("express");
 const multer = require("multer");
 const mongoose = require("mongoose");
@@ -39,6 +40,9 @@ mongoose
 
 const storage = multer.diskStorage({
   destination: (_, __, callback) => {
+    if(!fs.existsSync("uploads")) {
+      fs.mkdirSync("uploads")
+    }
     callback(null, "uploads");
   },
   filename: (_, file, callback) => {
